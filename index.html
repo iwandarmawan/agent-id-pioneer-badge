@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent ID Pioneer Badge — Free Commemorative Badge for Agent ID Holders</title>
+<meta name="description" content="A free commemorative badge for Agent ID holders. One badge per holder, free of charge. No returns, no rewards, no monetary value.">
+<link rel="icon" href="images/badge.svg" type="image/svg+xml">
+<style>
+  :root { --bg:#0b1220; --card:#141d31; --text:#e8ecf3; --muted:#9aa7bd; --gold:#f0b90b; --line:#24314d; --ok:#35c759; --bad:#ff453a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.55; }
+  main { max-width:720px; margin:0 auto; padding:32px 20px 64px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px; margin:20px 0; }
+  h1 { font-size:30px; margin:8px 0 4px; }
+  h2 { font-size:19px; margin:0 0 10px; }
+  p { margin:8px 0; }
+  .muted { color:var(--muted); }
+  .badge-img { display:block; width:180px; height:180px; margin:8px auto; border-radius:24px; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  button { background:var(--gold); color:#111; border:0; border-radius:10px; padding:12px 20px; font-size:16px; font-weight:bold; cursor:pointer; }
+  button:disabled { background:#3a4763; color:#8b98ad; cursor:not-allowed; }
+  button.secondary { background:transparent; color:var(--text); border:1px solid var(--line); }
+  code { background:#0b1220; border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:13px; word-break:break-all; }
+  .status { border-radius:10px; padding:12px 14px; margin-top:14px; display:none; }
+  .status.ok { display:block; background:#12351f; color:#b9f4c9; }
+  .status.err { display:block; background:#3d1715; color:#ffc7c2; }
+  .status.info { display:block; background:#1b2a4a; color:#cdd8ec; }
+  .kv { display:grid; grid-template-columns:170px 1fr; gap:6px 12px; margin:10px 0; }
+  .kv dt { color:var(--muted); }
+  .kv dd { margin:0; word-break:break-all; }
+  .pill { display:inline-block; border-radius:999px; padding:2px 10px; font-size:13px; font-weight:bold; }
+  .pill.ok { background:#12351f; color:#7be495; }
+  .pill.no { background:#3d1715; color:#ff9d97; }
+  .pill.na { background:#24314d; color:#cdd8ec; }
+  ul { padding-left:20px; }
+  footer { color:var(--muted); font-size:13px; margin-top:32px; }
+  a { color:var(--gold); }
+</style>
+<script type="importmap">
+{ "imports": { "ethers": "./vendor/ethers.min.js" } }
+</script>
+<!-- ethers v6.13.4 is vendored locally (vendor/ethers.min.js, sha256
+     562de2cfc9021c75453b04c75587d20311fb585a6fb4acce5d872d21036170c2)
+     instead of a CDN: the CDN failed to load in the headless render test,
+     and a static site should not depend on a third party at runtime. -->
+<script src="config.js"></script>
+</head>
+<body>
+<main>
+  <img class="badge-img" src="images/badge.svg" alt="Agent ID Pioneer Badge artwork">
+  <h1>Agent ID Pioneer Badge</h1>
+  <p class="muted">A free commemorative badge for Agent ID holders. One badge per holder, free of charge — you only pay your own network gas to mint it.</p>
+
+  <div class="card">
+    <h2>What this is — and what it is not</h2>
+    <ul>
+      <li>A collectible record of being an early Agent ID holder. Nothing more.</li>
+      <li><strong>No monetary value, no returns, no rewards, no airdrop.</strong> The badge will never pay anything out.</li>
+      <li>Minting is free: the contract accepts no payment. The only cost is the network gas for your own mint transaction, which you approve yourself in your wallet.</li>
+      <li>Only wallets holding an Agent ID can mint, one badge each, max 1,000 badges ever.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Check your eligibility &amp; mint</h2>
+    <p id="deploy-note" class="muted">Loading contract status…</p>
+    <div class="row">
+      <button id="connect-btn">Connect wallet</button>
+      <button id="switch-btn" class="secondary" style="display:none">Switch to BNB Smart Chain</button>
+    </div>
+    <dl class="kv" id="details" style="display:none">
+      <dt>Your wallet</dt><dd id="addr">—</dd>
+      <dt>Network</dt><dd id="net">—</dd>
+      <dt>Agent ID held</dt><dd id="aid">—</dd>
+      <dt>Badge owned</dt><dd id="owned">—</dd>
+      <dt>Badges minted</dt><dd id="supply">—</dd>
+      <dt>Eligible to mint</dt><dd id="eligible">—</dd>
+    </dl>
+    <div class="row" style="margin-top:14px">
+      <button id="mint-btn" disabled>Mint my free badge</button>
+    </div>
+    <div id="status" class="status" role="status"></div>
+    <p class="muted" style="font-size:13px">Minting opens your wallet for one transaction: <code>mint()</code>, no payment attached. You review and confirm it yourself — nothing is signed automatically, and no other transfer is bundled with it.</p>
+  </div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <ol>
+      <li>Connect your wallet (the one holding your Agent ID).</li>
+      <li>The page reads your Agent ID balance on-chain. If it is above zero and you have not minted yet, you are eligible.</li>
+      <li>Press “Mint my free badge” and confirm the transaction in your wallet. The badge appears in your wallet as an NFT.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Contract &amp; owner permissions</h2>
+    <dl class="kv">
+      <dt>Badge contract</dt><dd id="badge-addr">Not deployed yet</dd>
+      <dt>Agent ID contract</dt><dd><a id="aid-link" href="https://bscscan.com/address/0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F" target="_blank" rel="noopener">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</a> (BscScan)</dd>
+      <dt>Owner can do</dt><dd>Only <code>setBaseURI</code> — point the badge artwork/metadata at its host. That is the only owner-privileged function.</dd>
+      <dt>Owner cannot do</dt><dd>No withdraw function (the contract never holds funds), no owner reserve, no pause, no transfer restrictions beyond standard ERC-721 rules.</dd>
+      <dt>Source code</dt><dd id="source-note">Verified and open-source on BscScan after deployment.</dd>
+    </dl>
+  </div>
+
+  <footer>
+    Built for the Agent ID Hackathon project track. This page is a static site: it holds no private keys, runs no backend, and never asks you to scan a QR code or paste a seed phrase. Always confirm every transaction in your own wallet before signing.
+  </footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
