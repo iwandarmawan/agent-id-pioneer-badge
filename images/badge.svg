@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Agent ID Pioneer Badge">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a4a"/>
+      <stop offset="1" stop-color="#0b1220"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0b90b"/>
+      <stop offset="1" stop-color="#8a6d1b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="48" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="168" fill="none" stroke="url(#ring)" stroke-width="10"/>
+  <circle cx="256" cy="256" r="148" fill="none" stroke="#f0b90b" stroke-width="2" stroke-dasharray="4 10" opacity="0.6"/>
+  <text x="256" y="225" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="bold" fill="#f0b90b">AI</text>
+  <text x="256" y="285" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" letter-spacing="6" fill="#ffffff">PIONEER</text>
+  <text x="256" y="322" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="3" fill="#9aa7bd">AGENT ID HOLDER</text>
+  <text x="256" y="448" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="2" fill="#5c6b84">FREE COMMEMORATIVE BADGE</text>
+</svg>
